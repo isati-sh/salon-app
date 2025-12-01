@@ -54,6 +54,13 @@ export default async function CustomerGiftCardsPage() {
                     Status: {gc.is_active ? "Active" : "Inactive"}
                   </p>
                 </div>
+                <div className="mt-4">
+                  <Button asChild variant="outline" size="sm">
+                    <Link href={`/customer/gift-cards/${gc.id}/transactions`}>
+                      View Transactions
+                    </Link>
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           ))

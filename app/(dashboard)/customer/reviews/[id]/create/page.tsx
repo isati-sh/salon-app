@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, use } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,9 +10,10 @@ import { Input } from "@/components/ui/input";
 export default function CreateReviewPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   const router = useRouter();
+  const { id } = use(params);
   const [rating, setRating] = useState(0);
   const [wouldReturn, setWouldReturn] = useState<boolean | null>(null);
   const [comments, setComments] = useState("");
@@ -27,7 +28,7 @@ export default function CreateReviewPage({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          appointmentId: parseInt(params.id),
+          appointmentId: parseInt(id),
           rating,
           wouldReturn,
           comments,

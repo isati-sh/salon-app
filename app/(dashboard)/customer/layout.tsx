@@ -32,6 +32,9 @@ export default async function CustomerLayout({
             <Link href="/customer/gift-cards" className="hover:underline">
               Gift Cards
             </Link>
+            <Link href="/customer/reviews" className="hover:underline">
+              Reviews
+            </Link>
             <Link href="/customer/profile" className="hover:underline">
               Profile
             </Link>

@@ -44,6 +44,14 @@ export interface Profile {
   updated_at: string; // timestamptz
 }
 
+export interface ServiceCategory {
+  id: number; // bigserial
+  name: string;
+  description: string | null;
+  display_order: number | null;
+  created_at: string; // timestamptz
+}
+
 export interface Service {
   id: number; // bigserial
   name: string;
@@ -51,6 +59,9 @@ export interface Service {
   duration_minutes: number;
   base_price: number;
   is_active: boolean;
+  category_id: number | null; // bigint, service_categories.id
+  display_order: number | null;
+  is_featured: boolean;
   created_at: string; // timestamptz
 }
 

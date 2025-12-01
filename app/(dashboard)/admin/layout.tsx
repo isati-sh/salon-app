@@ -41,6 +41,9 @@ export default async function AdminLayout({
             <Link href="/admin/analytics" className="hover:underline">
               Analytics
             </Link>
+            <Link href="/admin/settings" className="hover:underline">
+              Settings
+            </Link>
             <form action={handleSignOut}>
               <Button type="submit" variant="outline">
                 Sign Out

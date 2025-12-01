@@ -53,14 +53,23 @@ export default async function CustomerAppointmentsPage() {
                 </div>
                 {apt.status === "pending" || apt.status === "confirmed" ? (
                   <div className="mt-4 flex gap-2">
-                    <Button variant="outline" size="sm">
-                      Reschedule
+                    <Button asChild variant="outline" size="sm">
+                      <Link href={`/customer/appointments/${apt.id}/reschedule`}>
+                        Reschedule
+                      </Link>
                     </Button>
-                    <Button variant="destructive" size="sm">
-                      Cancel
-                    </Button>
+                    <form action={`/customer/appointments/${apt.id}/cancel`} method="POST">
+                      <Button type="submit" variant="destructive" size="sm">
+                        Cancel
+                      </Button>
+                    </form>
                   </div>
                 ) : null}
+                <div className="mt-2">
+                  <Button asChild variant="ghost" size="sm">
+                    <Link href={`/customer/appointments/${apt.id}`}>View Details</Link>
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           ))

@@ -27,6 +27,9 @@ CREATE TABLE IF NOT EXISTS services (
   duration_minutes INTEGER NOT NULL,
   base_price DECIMAL(10, 2) NOT NULL,
   is_active BOOLEAN DEFAULT TRUE,
+  category_id bigint references public.service_categories(id) on delete restrict,
+  display_order integer,
+  is_featured boolean not null default false,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
@@ -50,6 +53,32 @@ CREATE TABLE IF NOT EXISTS employee_blocked_times (
   reason TEXT,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
+
+-- =========================================
+-- EMPLOYEE ↔ SERVICE LINK
+-- =========================================
+
+create table if not exists public.employee_services (
+    id bigserial primary key,
+    employee_id uuid not null references public.profiles(id) on delete cascade,
+    service_id bigint not null references public.services(id) on delete cascade,
+    -- Optional overrides per stylist:
+    price_override numeric(10,2) check (price_override is null or price_override >= 0),
+    duration_override integer check (duration_override is null or duration_override > 0),
+    is_active boolean not null default true,
+    created_at timestamptz not null default timezone('utc', now()),
+    unique (employee_id, service_id)
+);
+
+create index if not exists idx_employee_services_employee_id
+    on public.employee_services(employee_id);
+
+create index if not exists idx_employee_services_service_id
+    on public.employee_services(service_id);
+
+create index if not exists idx_employee_services_is_active
+    on public.employee_services(is_active);
+
 
 -- Promotions table
 CREATE TABLE IF NOT EXISTS promotions (
